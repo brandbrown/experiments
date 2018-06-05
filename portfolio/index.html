@@ -1,13 +1,38 @@
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>A Document</title>
-</head>
-<body>
-    Hello Wurld
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>A Document</title>
+    </head>
 
+    <body onload="loadResources()">
+        <h1>We only know what is not.</h1>
 
+        <script>
+            function loadResources()
+            {
+                var image1 = new Image();
+                image1.onload = resourceTiming;
+                image1.src = 'https://www.w3.org/Icons/w3c_main.png';
+            }
+
+            function resourceTiming()
+            {
+                
+                var resourceList = window.performance.getEntriesByType("resource");
+                console.log(resourceList);
+                for (i = 0; i < resourceList.length; i++)
+                {
+                    console.log("Initiator Type:", resourceList[i].initiatorType);
+                    if (resourceList[i].initiatorType == "img")
+                    {
+                        console.log("End to end resource fetch: ", resourceList[i].responseEnd - resourceList[i].startTime);
+                    }
+                }
+            }
+        </script>
+        <img id="image0" src="https://www.w3.org/Icons/w3c_home.png">
+        <script src="src/main.js"></script>
+    </body>
 </html>
