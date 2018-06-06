@@ -1,5 +1,21 @@
 
+function startup() {
+    let app = new Main();
 
+    // clock
+    app.setClock();
+    setInterval(app.setClock, 1000);
+}
+
+class Main {
+    setClock() {
+        let time = new Date();
+        let clock = document.getElementById("clock");
+        clock.innerHTML = time.toLocaleTimeString();
+    }
+}
+
+// messing around
 function sleep (time) {
     return new Promise((resolve) => setTimeout(() => {
 
@@ -36,8 +52,4 @@ class TestClass{
     get someProp() {
         return this._someProp;
     }
-}
-
-function someFunc() {
-    console.log("I get called");
 }
