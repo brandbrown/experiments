@@ -1,11 +1,15 @@
-console.log("main running");
+
 
 function sleep (time) {
-    return new Promise((resolve) => setTimeout(resolve, 1000));
-  }
+    return new Promise((resolve) => setTimeout(() => {
 
+        console.log("timeout over!");
+        resolve()
 
-sleep().then(a => {
+    }, time));
+}
+
+sleep(1000).then(a => {
     console.log("raw promise!");
 });
 
@@ -13,6 +17,14 @@ class TestClass{
     constructor() {
         this._someProp = null;
     }
+
+    async tryItOut(time) {
+        let result = await sleep(time);
+
+        console.log("gets blocked");
+
+        return result;
+    } 
 
     set someProp(value) {
         if (value == "invalid") {
@@ -24,4 +36,8 @@ class TestClass{
     get someProp() {
         return this._someProp;
     }
+}
+
+function someFunc() {
+    console.log("I get called");
 }
