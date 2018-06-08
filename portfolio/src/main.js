@@ -1,4 +1,4 @@
-import { Timer } from 'timer';
+import Timer from './timer.js';
 
 function startup() {
     let app = new Main();
@@ -24,6 +24,7 @@ class Main {
     }
 }
 
+startup();
 
 
 // messing around
