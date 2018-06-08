@@ -1,3 +1,4 @@
+import { Timer } from 'timer';
 
 function startup() {
     let app = new Main();
@@ -8,12 +9,22 @@ function startup() {
 }
 
 class Main {
+    constructor() {
+        this.timers = [];
+    }
+
     setClock() {
         let time = new Date();
         let clock = document.getElementById("clock");
         clock.innerHTML = time.toLocaleTimeString();
     }
+
+    addTimer() {
+        this.timers.push(new Timer());
+    }
 }
+
+
 
 // messing around
 function sleep (time) {
