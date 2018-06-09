@@ -1,3 +1,4 @@
+import Selectron from './selectron.js';
 import Timer from './timer.js';
 
 function startup() {
@@ -6,7 +7,11 @@ function startup() {
     // clock
     app.setClock();
     setInterval(app.setClock, 1000);
+
 }
+
+let _butler = new Selectron();
+let _timer = new Timer();
 
 class Main {
     constructor() {
@@ -15,7 +20,7 @@ class Main {
 
     setClock() {
         let time = new Date();
-        let clock = document.getElementById("clock");
+        let clock = _butler.find("clock");
         clock.innerHTML = time.toLocaleTimeString();
     }
 
@@ -27,41 +32,4 @@ class Main {
 startup();
 
 
-// messing around
-function sleep (time) {
-    return new Promise((resolve) => setTimeout(() => {
-
-        console.log("timeout over!");
-        resolve()
-
-    }, time));
-}
-
-sleep(1000).then(a => {
-    console.log("raw promise!");
-});
-
-class TestClass{
-    constructor() {
-        this._someProp = null;
-    }
-
-    async tryItOut(time) {
-        let result = await sleep(time);
-
-        console.log("gets blocked");
-
-        return result;
-    } 
-
-    set someProp(value) {
-        if (value == "invalid") {
-            this._someProp = "That was not valid."
-        } else
-        this._someProp = value;
-    }
-
-    get someProp() {
-        return this._someProp;
-    }
-}
+_butler.find("test").addEventListener("click", e => _timer.addTimerToPage("timerList"));
