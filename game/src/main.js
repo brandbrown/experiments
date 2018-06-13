@@ -4,33 +4,28 @@ document.onkeydown = function(evt) {
     evt = evt || window.event;
 
     let hero = document.getElementById("moveMe");
-    let heroStyle = hero.currentStyle || window.getComputedStyle(hero);
-    let moveAttr = getMoveAttr(evt.keyCode);
-    let finalValue = getFinalValue(evt.keyCode, parseInt(heroStyle[moveAttr]));
+    let curTransform = new WebKitCSSMatrix(window.getComputedStyle(hero).webkitTransform);
+    let x = curTransform.m41 + "px";
+    let y = curTransform.m42 + "px";
 
-    console.log("key is being pressed", evt.keyCode, finalValue);
+    switch (evt.keyCode) {
+        case 37:
+            x = incrementWithPx(curTransform.m41, -15);
+            break;
+        case 39:
+            x = incrementWithPx(curTransform.m41, 15);
+            break;
+        case 38:
+            y = incrementWithPx(curTransform.m42, -15);
+            break;
+        case 40:
+            y = incrementWithPx(curTransform.m42, 15);
+            break;
+    }
 
-    requestAnimationFrame(() => hero.style[moveAttr] = finalValue + 'px');
+    hero.style["transform"] = "translate(" + x + "," + y + ")";
 };
 
-function getMoveAttr(keyCode) {
-    let attrDict = {
-        "38": "marginTop",
-        "40": "marginTop",
-        "37": "marginLeft",
-        "39": "marginLeft"
-    };
-
-    return attrDict[keyCode];
-}
-
-function getFinalValue(keyCode, baseValue) {
-    let finalValues = {
-        "38": baseValue - 15,
-        "40": baseValue + 15,
-        "37": baseValue - 15,
-        "39": baseValue + 15
-    };
-
-    return finalValues[keyCode];
+function incrementWithPx(value, increment) {
+    return (value + increment) + "px";
 }
